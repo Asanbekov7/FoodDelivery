@@ -30,6 +30,8 @@ class OnboardingPartsViewController: UIViewController {
         }
     }
     
+    var nextBtnText: String?
+    
     //MARK: - Views
     private lazy var titleImage: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false

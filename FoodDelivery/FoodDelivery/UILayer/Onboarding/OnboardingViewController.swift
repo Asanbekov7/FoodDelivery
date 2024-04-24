@@ -34,6 +34,16 @@ class OnboardingViewController: UIViewController {
         return $0
     }(UIPageControl())
     
+    private lazy var nextButton: UIButton = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.titleLabel?.font = .Roboto.Bold.size(of: 18)
+        $0.setTitleColor(AppColors.black, for: .normal)
+        $0.backgroundColor = AppColors.white
+        $0.layer.cornerRadius = 24
+        $0.addAction(nextBtnAction, for: .touchUpInside)
+        return $0
+    }(UIButton())
+    
     init(pages: [OnboardingPartsViewController] = [OnboardingPartsViewController](), viewOutput: OnboardingViewOutput!) {
         self.pages = pages
         self.viewOutput = viewOutput
@@ -50,6 +60,28 @@ class OnboardingViewController: UIViewController {
         setupLayout()
     }
     
+    //MARK: - Actions
+    
+    private lazy var nextBtnAction = UIAction { [weak self] _ in
+        guard let self else { return }
+        
+        switch pageControl.currentPage {
+        case 0:
+            self.pageControl.currentPage = 1
+            self.pageVC.setViewControllers([self.pages[1]], direction: .forward, animated: true)
+        case 1:
+            pageControl.currentPage = 2
+            self.pageVC.setViewControllers([self.pages[2]], direction: .forward, animated: true)
+        case 2:
+            pageControl.currentPage = 3
+            self.pageVC.setViewControllers([self.pages[3]], direction: .forward, animated: true)
+            self.nextButton.setTitle(self.pages[3].nextBtnText, for: .normal)
+        case 3:
+            print("Exit!")
+        default:
+            break
+        }
+    }
 }
 
 //MARK: - Layout
@@ -58,6 +90,7 @@ private extension OnboardingViewController {
     func setupLayout() {
         setupPageVC()
         setupPageControl()
+        setupNextButton()
     }
     
     func setupPageVC() {
@@ -67,12 +100,28 @@ private extension OnboardingViewController {
     }
     
     func setupPageControl() {
+        
+        let page = pages[0]
+        let title = page.nextBtnText
+        nextButton.setTitle(title, for: .normal)
+        
         view.addSubview(pageControl)
         
         NSLayoutConstraint.activate([
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
         
+        ])
+    }
+    
+    func setupNextButton() {
+        view.addSubview(nextButton)
+        
+        NSLayoutConstraint.activate([
+            nextButton.bottomAnchor.constraint(equalTo: pageControl.topAnchor, constant: -44),
+            nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            nextButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }
@@ -101,6 +150,9 @@ extension OnboardingViewController: UIPageViewControllerDelegate {
     
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
         if let index = pages.firstIndex(of: pendingViewControllers.first! as! OnboardingPartsViewController) {
+            let page = pages[index]
+            let title = page.nextBtnText
+            nextButton.setTitle(title, for: .normal)
             pageControl.currentPage = index
         }
     }
