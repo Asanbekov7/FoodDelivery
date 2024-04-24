@@ -13,7 +13,7 @@ class OnboardingViewController: UIViewController {
 
     //MARK: - Properties
     
-    private var pages = [UIViewController]()
+    private var pages = [OnboardingPartsViewController]()
     var viewOutput: OnboardingViewOutput!
     
     //MARK: - Views
@@ -34,7 +34,7 @@ class OnboardingViewController: UIViewController {
         return $0
     }(UIPageControl())
     
-    init(pages: [UIViewController] = [UIViewController](), viewOutput: OnboardingViewOutput!) {
+    init(pages: [OnboardingPartsViewController] = [OnboardingPartsViewController](), viewOutput: OnboardingViewOutput!) {
         self.pages = pages
         self.viewOutput = viewOutput
         super.init(nibName: nil, bundle: nil)
@@ -81,13 +81,13 @@ private extension OnboardingViewController {
 
 extension OnboardingViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let currentIndex = pages.firstIndex(of: viewController), currentIndex > 0 else { return nil }
+        guard let currentIndex = pages.firstIndex(of: viewController as! OnboardingPartsViewController), currentIndex > 0 else { return nil }
         
         return pages[currentIndex - 1]
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let currentIndex = pages.firstIndex(of: viewController), currentIndex < pages.count - 1 else { return nil }
+        guard let currentIndex = pages.firstIndex(of: viewController as! OnboardingPartsViewController), currentIndex < pages.count - 1 else { return nil }
         
         return pages[currentIndex + 1]
     }
@@ -100,7 +100,7 @@ extension OnboardingViewController: UIPageViewControllerDataSource {
 extension OnboardingViewController: UIPageViewControllerDelegate {
     
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        if let index = pages.firstIndex(of: pendingViewControllers.first!) {
+        if let index = pages.firstIndex(of: pendingViewControllers.first! as! OnboardingPartsViewController) {
             pageControl.currentPage = index
         }
     }
