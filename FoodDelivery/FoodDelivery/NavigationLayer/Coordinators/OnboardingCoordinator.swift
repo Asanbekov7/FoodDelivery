@@ -27,21 +27,25 @@ private extension OnboardingCoordinator {
         firstVC.imageToShow = .chickenLeg
         firstVC.labelText = "Delicious Food"
         firstVC.descriptionText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        firstVC.nextBtnText = "Next"
         
         let secondVC = OnboardingPartsViewController()
         secondVC.imageToShow = .shipped
         secondVC.labelText = "Fast Shipping"
         secondVC.descriptionText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interdum rhoncus nulla."
+        secondVC.nextBtnText = "Next"
         
         let thirdVC = OnboardingPartsViewController()
         thirdVC.imageToShow = .medal
         thirdVC.labelText = "Certificate Food"
         thirdVC.descriptionText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultricies mauris a id."
+        thirdVC.nextBtnText = "Next"
         
         let fourthVC = OnboardingPartsViewController()
         fourthVC.imageToShow = .creditCard
         fourthVC.labelText = "Payment Online"
         fourthVC.descriptionText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dui ultricies sit massa."
+        fourthVC.nextBtnText = "Cool!"
         
         pages.append(firstVC)
         pages.append(secondVC)
