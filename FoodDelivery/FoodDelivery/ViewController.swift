@@ -14,6 +14,7 @@ class ViewController: UIViewController {
         $0.font = .Roboto.BoldItalic.size(of: 25)
 //        $0.textColor = .black
         $0.text = "Hello world!"
+        
         return $0
     }(UILabel())
 
