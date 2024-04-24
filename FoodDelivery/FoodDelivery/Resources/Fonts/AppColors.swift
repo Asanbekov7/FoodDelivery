@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum Appcolors {
+enum AppColors {
     static let accentTomato = UIColor().hex(0xC8393D)
     static let grey = UIColor().hex(0xECF0F1)
     static let black = UIColor().hex(0x000000)
