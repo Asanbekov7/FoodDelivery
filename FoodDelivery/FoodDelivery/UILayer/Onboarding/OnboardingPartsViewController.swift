@@ -54,15 +54,13 @@ class OnboardingPartsViewController: UIViewController {
         $0.textAlignment = .center
         return $0
     }(UILabel())
-
+    
     //MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
     }
-
-
 }
 
 //MARK: - Layout
@@ -90,7 +88,6 @@ private extension OnboardingPartsViewController {
             titleLabel.topAnchor.constraint(equalTo: titleImage.bottomAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-        
         ])
     }
     

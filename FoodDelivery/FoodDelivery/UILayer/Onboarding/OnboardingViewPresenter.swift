@@ -7,12 +7,18 @@
 
 import UIKit
 
+//MARK: - OnboardingViewOutput
+
 protocol OnboardingViewOutput: AnyObject {
     func onboardingFinish()
 }
 
+//MARK: - OnboardingViewPresenter
+
 class OnboardingViewPresenter {
     weak var coordinator: OnboardingCoordinator!
+    
+    private let userStorage = UserStorage.shared
     
     init(coordinator: OnboardingCoordinator!) {
         self.coordinator = coordinator
@@ -21,8 +27,7 @@ class OnboardingViewPresenter {
 
 extension OnboardingViewPresenter: OnboardingViewOutput {
     func onboardingFinish() {
+        userStorage.passedOnboarding = true
         coordinator.finish()
     }
-    
-    
 }
