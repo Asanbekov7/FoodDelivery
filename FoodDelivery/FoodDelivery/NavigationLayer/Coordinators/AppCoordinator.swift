@@ -18,11 +18,11 @@ class AppCoordinator: Coordinator {
 //        if userStorage.passedOnboarding {
 //            showMainFlow()
 //        } else {
-//            showOnboardingFlow()
+            showOnboardingFlow()
 //        }
-        let vc = LoginViewController()
-        vc.view.backgroundColor = .red
-        navigationController?.pushViewController(vc, animated: true)
+//        let vc = LoginViewController()
+//        vc.view.backgroundColor = .red
+//        navigationController?.pushViewController(vc, animated: true)
     }
     
     override func finish() {

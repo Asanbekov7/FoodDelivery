@@ -35,15 +35,7 @@ class OnboardingViewController: UIViewController {
         return $0
     }(UIPageControl())
     
-    private lazy var nextButton: UIButton = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.titleLabel?.font = .Roboto.Bold.size(of: 18)
-        $0.setTitleColor(AppColors.black, for: .normal)
-        $0.backgroundColor = AppColors.white
-        $0.layer.cornerRadius = 24
-        $0.addAction(nextBtnAction, for: .touchUpInside)
-        return $0
-    }(UIButton())
+    private let nextButton = FDButton(scheme: .white)
     
     init(pages: [OnboardingPartsViewController] = [OnboardingPartsViewController](), viewOutput: OnboardingViewOutput!) {
         self.pages = pages
@@ -60,30 +52,6 @@ class OnboardingViewController: UIViewController {
         view.backgroundColor = AppColors.accentTomato
         setupLayout()
     }
-    
-    //MARK: - Actions
-    
-    private lazy var nextBtnAction = UIAction { [weak self] _ in
-        guard let self else { return }
-        
-        switch pageControl.currentPage {
-        case 0:
-            self.pageControl.currentPage = 1
-            self.pageVC.setViewControllers([self.pages[1]], direction: .forward, animated: true)
-        case 1:
-            pageControl.currentPage = 2
-            self.pageVC.setViewControllers([self.pages[2]], direction: .forward, animated: true)
-        case 2:
-            pageControl.currentPage = 3
-            self.pageVC.setViewControllers([self.pages[3]], direction: .forward, animated: true)
-            self.nextButton.setTitle(self.pages[3].nextBtnText, for: .normal)
-        case 3:
-            print("Exit!")
-            self.viewOutput.onboardingFinish()
-        default:
-            break
-        }
-    }
 }
 
 //MARK: - Layout
@@ -93,6 +61,7 @@ private extension OnboardingViewController {
         setupPageVC()
         setupPageControl()
         setupNextButton()
+        customBtnAction()
     }
     
     func setupPageVC() {
@@ -104,7 +73,7 @@ private extension OnboardingViewController {
     func setupPageControl() {
         let page = pages[0]
         let title = page.nextBtnText
-        nextButton.setTitle(title, for: .normal)
+        nextButton.setTitle(title, .normal)
         
         view.addSubview(pageControl)
         
@@ -116,6 +85,8 @@ private extension OnboardingViewController {
     
     func setupNextButton() {
         view.addSubview(nextButton)
+        nextButton.translatesAutoresizingMaskIntoConstraints = false
+        nextButton.scheme = .white
         
         NSLayoutConstraint.activate([
             nextButton.bottomAnchor.constraint(equalTo: pageControl.topAnchor, constant: -44),
@@ -123,6 +94,33 @@ private extension OnboardingViewController {
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             nextButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+    //MARK: - Actions
+    
+    func customBtnAction() {
+        nextButton.customButtonAction = { [weak self] _ in
+            guard let self else { return }
+            
+            switch pageControl.currentPage {
+            case 0:
+                self.pageControl.currentPage = 1
+                self.pageVC.setViewControllers([self.pages[1]], direction: .forward, animated: true)
+            case 1:
+                pageControl.currentPage = 2
+                self.pageVC.setViewControllers([self.pages[2]], direction: .forward, animated: true)
+            case 2:
+                pageControl.currentPage = 3
+                self.pageVC.setViewControllers([self.pages[3]], direction: .forward, animated: true)
+                self.nextButton.setTitle(self.pages[3].nextBtnText, .normal)
+                
+            case 3:
+                print("Exit!")
+                self.viewOutput.onboardingFinish()
+            default:
+                break
+            }
+        }
     }
 }
 
@@ -157,7 +155,7 @@ extension OnboardingViewController: UIPageViewControllerDelegate {
             pageControl.currentPage = currentPage
             let page = pages[currentPage]
             let title = page.nextBtnText
-            nextButton.setTitle(title, for: .normal)
+            nextButton.setTitle(title, .normal)
         }
     }
 }
