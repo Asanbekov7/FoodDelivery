@@ -7,23 +7,52 @@
 
 import UIKit
 
+//MARK: - LoginViewController
+
 class LoginViewController: UIViewController {
 
+    private let bottomView = BottomView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupLayout()
+    }
+   
+}
 
-        // Do any additional setup after loading the view.
+//MARK: - Layout
+
+private extension LoginViewController {
+    func setupLayout() {
+        setupBottomView()
+        faceBookBtnAction()
+        googleBtnAction()
+    }
+ 
+    func setupBottomView() {
+        view.addSubview(bottomView)
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bottomView.heightAnchor.constraint(equalToConstant: 170)
+        ])
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    //MARK: - Actions
+    
+    func faceBookBtnAction() {
+        bottomView.facebookAction = { sender in
+            //To DO
+            print("facebookAction")
+        }
     }
-    */
-
+    
+    func googleBtnAction() {
+        bottomView.googleAction = {  sender in
+            //To DO
+            print("googleAction")
+        }
+    }
 }
