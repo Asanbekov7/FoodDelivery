@@ -14,12 +14,15 @@ class AppCoordinator: Coordinator {
     
     override func start() {
         
-        userStorage.passedOnboarding = false
-        if userStorage.passedOnboarding {
-            showMainFlow()
-        } else {
-            showOnboardingFlow()
-        }
+//        userStorage.passedOnboarding = false
+//        if userStorage.passedOnboarding {
+//            showMainFlow()
+//        } else {
+//            showOnboardingFlow()
+//        }
+        let vc = LoginViewController()
+        vc.view.backgroundColor = .red
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     override func finish() {
